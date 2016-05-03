@@ -1,0 +1,23 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>List</title>
+</head>
+<body>
+    <div> 
+        <ol>
+            @foreach (var person in ViewBag.People)
+            {
+                <li>@person</li>
+            }
+        </ol>
+    </div>
+</body>
+</html>
