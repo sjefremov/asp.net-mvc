@@ -10,6 +10,8 @@ namespace CodeAcademy.ProjectManagament.WebApp.Database
     {
         public List<Project> GetAll()
         {
+            var projects = new List<Project>();
+
             return new List<Project>();
         }
 
