@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -36,9 +37,40 @@ namespace CodeAcademy.ProjectManagament.WebApp.Controllers
             return View();
         }
 
-        public ActionResult Update()
+        public ActionResult Update(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Project project = Projects.GetAll().Single(p => p.ID == id);
+
+            if (project == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(project);
+        }
+
+        [HttpPost, ActionName("Update")]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateProject(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var projectToUpdate = Projects.GetAll().Single(p => p.ID == id);
+
+            if (TryUpdateModel(projectToUpdate, "",
+               new string[] { "Name", "Description", "Estimate" }))
+            {
+                return RedirectToAction("Index");
+            }
+            return View(projectToUpdate);
         }
 
         public ActionResult Delete()
