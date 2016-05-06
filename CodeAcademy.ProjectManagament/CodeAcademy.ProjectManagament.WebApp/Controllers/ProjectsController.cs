@@ -1,4 +1,5 @@
 ﻿using CodeAcademy.ProjectManagament.WebApp.Database;
+using CodeAcademy.ProjectManagament.WebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,6 @@ namespace CodeAcademy.ProjectManagament.WebApp.Controllers
         
         public ActionResult Create()
         {
-
             return View();
         }
 
@@ -44,7 +44,7 @@ namespace CodeAcademy.ProjectManagament.WebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Project project = Projects.GetAll().Single(p => p.ID == id);
+            Project project = Projects.GetAll().SingleOrDefault(p => p.ID == id);
 
             if (project == null)
             {
@@ -63,7 +63,12 @@ namespace CodeAcademy.ProjectManagament.WebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var projectToUpdate = Projects.GetAll().Single(p => p.ID == id);
+            var projectToUpdate = Projects.GetAll().SingleOrDefault(p => p.ID == id);
+
+            if (projectToUpdate == null)
+            {
+                return HttpNotFound();
+            }
 
             if (TryUpdateModel(projectToUpdate, "",
                new string[] { "Name", "Description", "Estimate" }))
