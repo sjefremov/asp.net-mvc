@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodeAcademy.ProjectManagament.WebApp.Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -17,11 +18,15 @@ namespace CodeAcademy.ProjectManagament.WebApp.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Create(string name, string desc, int estimate)
+        public ActionResult Create(Project project)
         {
-            ViewBag.Name = name;
-            ViewBag.Description = desc;
-            ViewBag.Estimate = estimate;
+
+            ViewBag.Name = project.Name;
+            ViewBag.Description = project.Description;
+            ViewBag.Estimate = project.Estimate;
+
+            Projects.Add(project);
+
             return View();
         }
         

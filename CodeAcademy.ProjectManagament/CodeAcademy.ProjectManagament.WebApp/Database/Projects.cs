@@ -8,19 +8,73 @@ namespace CodeAcademy.ProjectManagament.WebApp.Database
 {
     public class Projects
     {
-        public List<Project> GetAll()
-        {
-            var projects = new List<Project>();
+        private static List<Project> projects;
 
-            return new List<Project>();
+        static Projects()
+        {
+            Init();
         }
 
-        
+        public static void Init()
+        {
+            projects = new List<Project>();
+
+            projects.Add(new Project
+            {
+                Name = "A",
+                Estimate = 100,
+                Description = "Project A Description"
+            });
+
+            projects.Add(new Project
+            {
+                Name = "B",
+                Estimate = 300,
+                Description = "Project B Description"
+            });
+
+            projects.Add(new Project
+            {
+                Name = "C",
+                Estimate = 400,
+                Description = "Project C Description"
+            });
+
+            projects.Add(new Project
+            {
+                Name = "D",
+                Estimate = 700,
+                Description = "Project D Description"
+            });
+        }
+
+        public static List<Project> GetAll()
+        {
+            return projects;
+        }
+
+        public static void Add(Project p)
+        {
+            projects.Add(p);
+        }
     }
 
     public class Project
     {
-        public int ID { get; set; }
+        private static int nextID;
+
+        static Project()
+        {
+            nextID = 0;
+        }
+
+        public Project()
+        {
+            ID = nextID++;
+        }
+
+        public int ID { get; private set; }
+
         public string Name { get; set; }
 
         public string Description { get; set; }
