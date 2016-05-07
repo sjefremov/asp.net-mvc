@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>My ASP.NET Website</title>
+    @RenderSection("Styles", false)
+    
+</head>
+<body>
+    <div>
+        <header>
+            <h2>Welcome to my ASP.NET Website</h2>
+        </header>
+        <content>
+            @RenderBody()
+        </content>
+        <footer>
+            &copy; My Company &reg; - @DateTime.Now.Year
+        </footer>
+    </div>
+    <script>
+        var x = 1;
+    </script>
+    @RenderSection("scripts", false)
+</body>
+</html>

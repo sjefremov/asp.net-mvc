@@ -1,0 +1,24 @@
+﻿@model List<string>
+@{
+    ViewBag.Title = "Exercise";
+}
+@section Styles {
+    <link href="~/Styles/Style.css" rel="stylesheet" />    
+}
+
+<h2>Exercise</h2>
+<table>
+    @for (var i = 0; i < Model.Count; i++)
+    {
+        <tr class="@GetClass(i)"><td>@Model[i]</td></tr>
+    }
+
+</table>
+
+@functions {
+    public string GetClass(int number)
+    {
+        return number % 2 == 0 ? "even" : "odd"; 
+    }
+}
+
