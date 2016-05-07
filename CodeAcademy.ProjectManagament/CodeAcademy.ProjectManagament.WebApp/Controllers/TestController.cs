@@ -3,15 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
 
 namespace CodeAcademy.ProjectManagament.WebApp.Controllers
 {
-    public class TestController : IController
+    public class TestController : Controller
     {
-        public void Execute(RequestContext requestContext)
+        // GET: Test
+        public ActionResult Index()
         {
-            requestContext.HttpContext.Response.Write("Hello light MVC");
+            return View();
+        }
+
+        public ActionResult Names()
+        {
+            var names = new List<string>
+            {
+                "Chuck Norris",
+                "Iron Man",
+                "Hulk",
+                "Bruce Lee"
+            };
+
+            return View(names);
         }
     }
 }
