@@ -12,11 +12,51 @@ namespace CodeAcademy.MVCModels.WebApp.Controllers
         Database db = new Database();
 
         // GET: Products
-        public ActionResult Index()
+        public ActionResult Index(string searchKeyword)
         {
-            var products = db.GetProducts();
+            IEnumerable<Product> products;
+
+            if (string.IsNullOrEmpty(searchKeyword))
+            {
+                products = db.GetProducts();
+            }
+            else
+            {
+                searchKeyword = searchKeyword.ToLower();
+                products = db.GetProducts().Where(p => p.Name.ToLower().Contains(searchKeyword));
+            }
 
             return View(products);
         }
+
+        public ActionResult GetProducts(string searchKeyword)
+        {
+            IEnumerable<Product> products;
+
+            if (string.IsNullOrEmpty(searchKeyword))
+            {
+                products = db.GetProducts();
+            }
+            else
+            {
+                searchKeyword = searchKeyword.ToLower();
+                products = db.GetProducts().Where(p => p.Name.ToLower().Contains(searchKeyword));
+            }
+
+            return View("Index", products);
+        }
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create(Product product)
+        {
+            db.CreateNew(product);
+            return View();
+        }
+
     }
 }

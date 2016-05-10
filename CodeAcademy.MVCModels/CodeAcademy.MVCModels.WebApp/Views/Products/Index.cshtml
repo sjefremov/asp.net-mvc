@@ -9,6 +9,12 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+<form action="~/products/index" method="get">
+    <input type="text" class="input-sm" name="searchKeyword" placeholder="Filter by name" />
+    <input type="submit" class="btn btn-warning" value="Filter" />
+</form>
+
 <table class="table">
     <tr>
         <th>
