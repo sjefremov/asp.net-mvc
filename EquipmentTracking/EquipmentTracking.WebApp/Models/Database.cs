@@ -17,7 +17,7 @@ namespace EquipmentTracking.WebApp.Models
 
         }
 
-        private IEnumerable<Equipment> GetEquipment()
+        public IEnumerable<Equipment> GetEquipment()
         {
             if (HttpContext.Current.Application["equipment"] != null)
             {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EquipmentTracking.WebApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +9,18 @@ namespace EquipmentTracking.WebApp.Controllers
 {
     public class EquipmentController : Controller
     {
+        private Database database = new Database();
         // GET: Equipment
-        public ActionResult Index()
+        public ActionResult Index(string query)
         {
-            return View();
+            var equipment = database.GetEquipment();
+
+            if (!string.IsNullOrEmpty(query))
+            {
+                equipment = equipment.Where(e => e.Name.ToLower().Contains(query.ToLower()));
+            }
+            
+            return View(equipment);
         }
     }
 }
