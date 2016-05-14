@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -10,17 +11,23 @@ namespace EquipmentTracking.WebApp.Models
 
         public Equipment()
         {
-            ID = Guid.NewGuid();
+            
         }
 
-        public Guid ID { get; private set; }
+        public int ID { get; set; }
 
+        [StringLength(200)]
+        [Required]
         public string Name { get; set; }
 
+        [StringLength(500)]
         public string Description { get; set; }
 
+        [StringLength(100)]
         public string Category { get; set; }
 
-        public Employee AssignedTo { get; set; }
+        public int? EmployeeID { get; set; }
+
+        public virtual Employee AssignedTo { get; set; }
     }
 }

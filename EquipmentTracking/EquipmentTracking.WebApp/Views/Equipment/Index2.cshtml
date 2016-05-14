@@ -1,0 +1,73 @@
+﻿@model IEnumerable<EquipmentTracking.WebApp.Models.Equipment>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<form action="~/equipment/index" method="get">
+    <input type="text" class="input-sm" name="query" value="@ViewBag.Query" placeholder="Filter by name" />
+    <input type="submit" class="btn btn-warning" value="Filter" />
+</form>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AssignedTo.Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Shorten(item.Description, 20)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AssignedTo.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>
+
+@functions {
+    /// <summary>
+    /// Shortens text longer than value of limitLength characters. 
+    /// If text is longer than 'limitLength' characters, adds '...' at the end, if not, leaves it as is.
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="limitLength"></param>
+    /// <returns></returns>
+    public string Shorten(string text, int limitLength)
+    {
+        return text.Length > limitLength ?
+                text.Substring(0, limitLength) + "..." :
+                    text;
+    }
+}

@@ -44,3 +44,7 @@ C:\Users\Стојанчо\Desktop\Stole\sedc-code-cademy\GitHub\EquipmentTrackin
 C:\Users\Стојанчо\Desktop\Stole\sedc-code-cademy\GitHub\EquipmentTracking\EquipmentTracking.WebApp\bin\System.Web.Mvc.xml
 C:\Users\Стојанчо\Desktop\Stole\sedc-code-cademy\GitHub\EquipmentTracking\EquipmentTracking.WebApp\obj\Debug\EquipmentTracking.WebApp.dll
 C:\Users\Стојанчо\Desktop\Stole\sedc-code-cademy\GitHub\EquipmentTracking\EquipmentTracking.WebApp\obj\Debug\EquipmentTracking.WebApp.pdb
+C:\Users\Стојанчо\Desktop\Stole\sedc-code-cademy\GitHub\EquipmentTracking\EquipmentTracking.WebApp\bin\EntityFramework.dll
+C:\Users\Стојанчо\Desktop\Stole\sedc-code-cademy\GitHub\EquipmentTracking\EquipmentTracking.WebApp\bin\EntityFramework.SqlServer.dll
+C:\Users\Стојанчо\Desktop\Stole\sedc-code-cademy\GitHub\EquipmentTracking\EquipmentTracking.WebApp\bin\EntityFramework.xml
+C:\Users\Стојанчо\Desktop\Stole\sedc-code-cademy\GitHub\EquipmentTracking\EquipmentTracking.WebApp\bin\EntityFramework.SqlServer.xml
