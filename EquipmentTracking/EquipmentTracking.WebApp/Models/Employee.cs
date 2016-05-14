@@ -5,22 +5,16 @@ using System.Web;
 
 namespace EquipmentTracking.WebApp.Models
 {
-    public class Equipment
+    public class Employee
     {
-
-        public Equipment()
+        public Employee(string name)
         {
             ID = Guid.NewGuid();
+            Name = name;
         }
 
         public Guid ID { get; private set; }
 
         public string Name { get; set; }
-
-        public string Description { get; set; }
-
-        public string Category { get; set; }
-
-        public Employee AssignedTo { get; set; }
     }
 }

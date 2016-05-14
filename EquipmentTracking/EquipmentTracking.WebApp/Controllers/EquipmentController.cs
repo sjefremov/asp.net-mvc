@@ -18,6 +18,7 @@ namespace EquipmentTracking.WebApp.Controllers
             if (!string.IsNullOrEmpty(query))
             {
                 equipment = equipment.Where(e => e.Name.ToLower().Contains(query.ToLower()));
+                ViewBag.Query = query;
             }
             
             return View(equipment);
