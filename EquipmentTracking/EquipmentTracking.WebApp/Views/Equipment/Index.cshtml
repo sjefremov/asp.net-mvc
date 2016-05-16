@@ -18,9 +18,6 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.AssignedTo.Name)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
@@ -29,22 +26,25 @@
         <th>
             @Html.DisplayNameFor(model => model.Category)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AssignedTo)
+        </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.AssignedTo.Name)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Description)
+            @Shorten(item.Description, 20)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Category)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AssignedTo.Name)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
@@ -55,3 +55,19 @@
 }
 
 </table>
+
+@functions {
+    /// <summary>
+    /// Shortens text longer than value of limitLength characters.
+    /// If text is longer than 'limitLength' characters, adds '...' at the end, if not, leaves it as is.
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="limitLength"></param>
+    /// <returns></returns>
+    public string Shorten(string text, int limitLength)
+    {
+        return text.Length > limitLength ?
+                text.Substring(0, limitLength) + "..." :
+                    text;
+    }
+}
