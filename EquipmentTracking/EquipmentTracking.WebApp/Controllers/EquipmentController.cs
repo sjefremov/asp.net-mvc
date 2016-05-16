@@ -26,12 +26,16 @@ namespace EquipmentTracking.WebApp.Controllers
                 ViewBag.Query = queryByName;
             }
 
+            var assignees = db.Employees.Where(e => e.AssignedEquipment.Count > 0).AsQueryable();
+            ViewBag.FilteredByEmployee = false;
+
             if (employeeID != null)
             {
                 equipment = equipment.Where(e => e.EmployeeID == employeeID);
+                assignees = assignees.Where(a => a.ID == employeeID);
+                ViewBag.FilteredByEmployee = true;
             }
-
-            var assignees = db.Employees.Where(e => e.AssignedEquipment.Count > 0);
+            
             ViewBag.Assignees = assignees.ToList();
             
             return View(equipment.ToList());

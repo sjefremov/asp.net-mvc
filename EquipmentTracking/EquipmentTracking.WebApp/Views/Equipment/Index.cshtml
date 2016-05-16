@@ -55,14 +55,24 @@
 }
 
 </table>
-<form action="~/equipment/index" method="post">
-    <span>Asignees:</span>
-    @foreach (var employee in ViewBag.Assignees as IEnumerable<Employee>)
+    @if ((bool)ViewBag.FilteredByEmployee)
     {
-        <a class="btn btn-default" href="~/equipment/index?employeeID=@employee.ID">@employee.Name</a>
+        <span>Filtered by:</span>
+    }
+    else
+    {
+        <span>Assignees:</span>
     }
     
-</form>
+    @foreach (var employee in ViewBag.Assignees as IEnumerable<Employee>)
+    {
+        <a class="btn btn-default" style="background-color: @GetRandomHexColour()" href="~/equipment/index?employeeID=@employee.ID">@employee.Name</a>
+    }
+    @if ((bool)ViewBag.FilteredByEmployee)
+    {
+        <a href="~/equipment/index">(Reset)</a>
+    }
+
 
 @functions {
     /// <summary>
@@ -77,5 +87,15 @@
         return text.Length > limitLength ?
                 text.Substring(0, limitLength) + "..." :
                     text;
+    }
+
+    Random random = new Random();
+    /// <summary>
+    /// returns random value for hex colour
+    /// </summary>
+    /// <returns></returns>
+    public string GetRandomHexColour()
+    {
+        return String.Format("#{0:X6}", random.Next(0x1000000));
     }
 }
