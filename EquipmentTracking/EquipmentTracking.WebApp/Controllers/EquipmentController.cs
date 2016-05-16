@@ -16,15 +16,23 @@ namespace EquipmentTracking.WebApp.Controllers
         private Database db = new Database();
 
         // GET: Equipment
-        public ActionResult Index(string query)
+        public ActionResult Index(string queryByName, int? employeeID)
         {
             var equipment = db.Equipment.AsQueryable();
 
-            if (!string.IsNullOrEmpty(query))
+            if (!string.IsNullOrEmpty(queryByName))
             {
-                equipment = equipment.Where(e => e.Name.ToLower().Contains(query.ToLower()));
-                ViewBag.Query = query;
+                equipment = equipment.Where(e => e.Name.ToLower().Contains(queryByName.ToLower()));
+                ViewBag.Query = queryByName;
             }
+
+            if (employeeID != null)
+            {
+                equipment = equipment.Where(e => e.EmployeeID == employeeID);
+            }
+
+            var assignees = db.Employees.Where(e => e.AssignedEquipment.Count > 0);
+            ViewBag.Assignees = assignees.ToList();
             
             return View(equipment.ToList());
         }

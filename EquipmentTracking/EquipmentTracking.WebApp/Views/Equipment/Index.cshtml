@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<EquipmentTracking.WebApp.Models.Equipment>
-
+@using EquipmentTracking.WebApp.Models
 @{
     ViewBag.Title = "Equipment";
 }
@@ -11,7 +11,7 @@
 </p>
 
 <form action="~/equipment/index" method="get">
-    <input type="text" class="input-sm" name="query" value="@ViewBag.Query" placeholder="Filter by name" />
+    <input type="text" class="input-sm" name="queryByName" value="@ViewBag.Query" placeholder="Filter by name" />
     <input type="submit" class="btn btn-warning" value="Filter" />
 </form>
 
@@ -55,6 +55,14 @@
 }
 
 </table>
+<form action="~/equipment/index" method="post">
+    <span>Asignees:</span>
+    @foreach (var employee in ViewBag.Assignees as IEnumerable<Employee>)
+    {
+        <a class="btn btn-default" href="~/equipment/index?employeeID=@employee.ID">@employee.Name</a>
+    }
+    
+</form>
 
 @functions {
     /// <summary>
