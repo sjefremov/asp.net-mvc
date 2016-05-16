@@ -11,8 +11,6 @@ namespace EquipmentTracking.WebApp.Controllers
 {
     public class EquipmentController : Controller
     {
-        private DatabaseOld databaseOld = new DatabaseOld();
-
         private Database db = new Database();
 
         // GET: Equipment
@@ -40,20 +38,7 @@ namespace EquipmentTracking.WebApp.Controllers
             
             return View(equipment.ToList());
         }
-
-        public ActionResult Index2(string query)
-        {
-            var equipment = databaseOld.GetEquipment();
-
-            if (!string.IsNullOrEmpty(query))
-            {
-                equipment = equipment.Where(e => e.Name.ToLower().Contains(query.ToLower()));
-                ViewBag.Query = query;
-            }
-
-            return View(equipment);
-        }
-
+       
         public ActionResult Create()
         {
             var employeesList = new SelectList(db.Employees, "ID", "Name").ToList();
@@ -188,6 +173,39 @@ namespace EquipmentTracking.WebApp.Controllers
             }
 
             return View(equipment);
+        }
+
+        public ActionResult LogIn()
+        {
+            if (HttpContext.Session["invalidTries"] == null)
+            {
+                HttpContext.Session["invalidTries"] = 0;
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult LogIn(string username, string password)
+        {
+            if (HttpContext.Session["invalidTries"] == null)
+            {
+                HttpContext.Session["invalidTries"] = 0;
+            }
+
+            if (username.Equals("admin") && password.Equals("admin#123"))
+            {
+                return RedirectToAction("Index");
+            }
+
+            HttpContext.Session["invalidTries"] = (int)HttpContext.Session["invalidTries"] + 1;
+
+            if ((int)HttpContext.Session["invalidTries"] > 5)
+            {
+                HttpContext.Session.Timeout = 30;
+            }
+            
+            return View();
         }
     }
 }

@@ -156,7 +156,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Database.cs" />
-    <Compile Include="Models\DatabaseOld.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Equipment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -169,7 +168,6 @@
     </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Equipment\Index2.cshtml" />
     <Content Include="scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Equipment\Index.cshtml" />
     <Content Include="Views\Equipment\Create.cshtml" />
@@ -181,6 +179,7 @@
     <Content Include="Views\Equipment\Edit.cshtml" />
     <Content Include="Views\Equipment\Delete.cshtml" />
     <Content Include="Views\Equipment\Details.cshtml" />
+    <Content Include="Views\Equipment\LogIn.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
