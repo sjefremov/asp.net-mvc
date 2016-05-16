@@ -175,6 +175,12 @@
     <Content Include="Views\Equipment\Create.cshtml" />
     <Content Include="Views\Employees\Index.cshtml" />
     <Content Include="Views\Employees\Create.cshtml" />
+    <Content Include="Views\Employees\Edit.cshtml" />
+    <Content Include="Views\Employees\Delete.cshtml" />
+    <Content Include="Views\Employees\Details.cshtml" />
+    <Content Include="Views\Equipment\Edit.cshtml" />
+    <Content Include="Views\Equipment\Delete.cshtml" />
+    <Content Include="Views\Equipment\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

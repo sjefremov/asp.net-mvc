@@ -1,6 +1,8 @@
 ﻿using EquipmentTracking.WebApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -45,6 +47,93 @@ namespace EquipmentTracking.WebApp.Controllers
         }
 
         public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var employee = db.Employees.SingleOrDefault(e => e.ID == id);
+
+            if (employee == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(employee);
+        }
+
+        [HttpPost, ActionName("Edit")]
+        public ActionResult EditPost(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var employee = db.Employees.SingleOrDefault(e => e.ID == id);
+
+            if (employee == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (TryUpdateModel(employee, "", new string[] { "Name" }))
+            {
+                try
+                {
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+                catch (RetryLimitExceededException ex)
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                }
+            }
+
+            return View(employee);
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var employee = db.Employees.SingleOrDefault(e => e.ID == id);
+
+            if (employee == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(employee);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeletePost(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            
+            var employee = db.Employees.SingleOrDefault(c => c.ID == id);
+
+            if (employee == null)
+            {
+                return HttpNotFound();
+            }
+
+            db.Employees.Remove(employee);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
