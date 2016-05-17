@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Exercise.WebApp.Models.User>
+@using Exercise.WebApp.Models;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Reset password</h2>
+
+<form action="~/users/index" method="post">
+    <input type="text" name="email" placeholder="Email" />
+    <input type="submit" value="Send" />
+</form>
+
+<table>
+    
+
+    @foreach (var resetUser in @Model.Where(u => u.ResetToken != null))
+    {
+        <tr>
+            <td>@resetUser.Email</td>
+            <td><a href="~/users/reset?resetToken=@resetUser.ResetToken">Reset password</a></td>
+        </tr>
+    }
+    
+</table>
+<br />
+<br />
+<br />
+<table>
+    
+    @foreach (var user in @Model.Where(u => u.ResetToken == null))
+    {
+        <tr>
+            <td>@user.Email</td>
+            <td>@user.Password</td>
+        </tr>
+    }
+</table>

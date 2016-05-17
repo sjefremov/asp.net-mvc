@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+@for (int i = 0; i < 10; i++)
+{
+    <input type="button" style="background-color: @GetRandomRed()" value="Button" />
+}
+
+
+
+@functions {
+
+
+    static Random random = new Random();
+    /// <summary>
+    /// returns random value for hex colour
+    /// </summary>
+    /// <returns></returns>
+    public static int GetRandom()
+    {
+        return random.Next(256);
+        //return String.Format("#{0:X2}0000", random.Next(0x100));
+    }
+
+    static List<dynamic> reds = new List<dynamic>
+    {
+        new
+        {
+            Red = 230,
+            Green = 0,
+            Blue = 0
+        },
+        new
+        {
+            Red = 255,
+            Green = 77,
+            Blue = 77
+        },
+        new
+        {
+            Red = 204,
+            Green = 0,
+            Blue = 0
+        },
+        new
+        {
+            Red = 128,
+            Green = 0,
+            Blue = 0
+        },
+        new
+        {
+            Red = 255,
+            Green = 153,
+            Blue = 153
+        },
+    };
+
+    dynamic lastRed = reds[random.Next(5)];
+
+    public string GetRandomRed()
+    {
+
+
+
+
+        var rt = Convert.ToInt32((int)lastRed.Red + (0.25 * (255 - (int)lastRed.Red)));
+        var gt = Convert.ToInt32((int)lastRed.Green + (0.25 * (255 - (int)lastRed.Green)));
+        var bt = Convert.ToInt32((int)lastRed.Blue + (0.25 * (255 - (int)lastRed.Blue)));
+
+        lastRed = new
+        {
+            Red = rt,
+            Green = gt,
+            Blue = bt
+        };
+
+        return "rgb(" + rt + ", " + gt + ", " + bt + ")";
+    }
+}
