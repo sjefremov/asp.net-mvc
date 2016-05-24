@@ -12,9 +12,15 @@ namespace EntityFramework.WebApp.Controllers
     {
         Database db = new Database();
         // GET: Customers
-        public ActionResult Index()
+        public ActionResult Index(string searchTerm)
         {
-            var customers = db.Customers.ToList();
+            var customers = db.Customers.Where(c => string.IsNullOrEmpty(searchTerm) 
+                                                    || c.Name.ToLower().Contains(searchTerm.ToLower()));
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_CustomersList", customers);
+            }
 
             return View(customers);
         }

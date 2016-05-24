@@ -72,3 +72,10 @@ C:\Users\Стојанчо\Desktop\Stole\sedc-code-cademy\GitHub\EntityFramework\
 C:\Users\Стојанчо\Desktop\Stole\sedc-code-cademy\GitHub\EntityFramework\EntityFramework.WebApp\obj\Debug\EntityFramework.WebApp.csprojResolveAssemblyReference.cache
 C:\Users\Стојанчо\Desktop\Stole\sedc-code-cademy\GitHub\EntityFramework\EntityFramework.WebApp\obj\Debug\EntityFramework.WebApp.dll
 C:\Users\Стојанчо\Desktop\Stole\sedc-code-cademy\GitHub\EntityFramework\EntityFramework.WebApp\obj\Debug\EntityFramework.WebApp.pdb
+C:\Users\Стојанчо\Desktop\Stole\sedc-code-cademy\GitHub\EntityFramework\EntityFramework.WebApp\bin\Antlr3.Runtime.dll
+C:\Users\Стојанчо\Desktop\Stole\sedc-code-cademy\GitHub\EntityFramework\EntityFramework.WebApp\bin\Newtonsoft.Json.dll
+C:\Users\Стојанчо\Desktop\Stole\sedc-code-cademy\GitHub\EntityFramework\EntityFramework.WebApp\bin\System.Web.Optimization.dll
+C:\Users\Стојанчо\Desktop\Stole\sedc-code-cademy\GitHub\EntityFramework\EntityFramework.WebApp\bin\WebGrease.dll
+C:\Users\Стојанчо\Desktop\Stole\sedc-code-cademy\GitHub\EntityFramework\EntityFramework.WebApp\bin\Antlr3.Runtime.pdb
+C:\Users\Стојанчо\Desktop\Stole\sedc-code-cademy\GitHub\EntityFramework\EntityFramework.WebApp\bin\Newtonsoft.Json.xml
+C:\Users\Стојанчо\Desktop\Stole\sedc-code-cademy\GitHub\EntityFramework\EntityFramework.WebApp\bin\System.Web.Optimization.xml
