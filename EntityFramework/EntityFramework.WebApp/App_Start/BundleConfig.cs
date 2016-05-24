@@ -15,7 +15,8 @@ namespace EntityFramework.WebApp
                                 .Include("~/Scripts/jquery-ui-{version}.js")
                                 .Include("~/Scripts/jquery.unobtrusive*")
                                 .Include("~/Scripts/jquery.validate*")
-                                .Include("~/Scripts/bootstrap.js"));
+                                .Include("~/Scripts/bootstrap.js")
+                                .Include("~/Scripts/customers.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery")
                                 .Include("~/Scripts/jquery-{version}.js"));

@@ -11,6 +11,20 @@ namespace EntityFramework.WebApp.Controllers
     public class CustomersController : Controller
     {
         Database db = new Database();
+
+        public ActionResult Autocomplete(string term)
+        {
+            var model = db.Customers
+                            .Where(c => c.Name.StartsWith(term))
+                            .Take(10)
+                            .Select(c => new
+                            {
+                                label = c.Name
+                            });
+
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Customers
         public ActionResult Index(string searchTerm)
         {

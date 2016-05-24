@@ -4,6 +4,10 @@
     ViewBag.Title = "Index";
 }
 
+@section Styles {
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">    
+}
+
 <h2>Index</h2>
 
 <p>
@@ -18,7 +22,7 @@
                     UpdateTargetId = "customersList"
                 }))
 {
-    <input type="search" name="searchTerm" />
+    <input type="search" name="searchTerm" data-customers-autocomplete="@Url.Action("Autocomplete")" />
     <input type="submit" value="Search by name" />
 }
 
