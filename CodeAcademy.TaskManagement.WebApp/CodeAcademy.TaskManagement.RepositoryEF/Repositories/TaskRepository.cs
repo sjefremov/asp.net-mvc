@@ -9,10 +9,11 @@ namespace CodeAcademy.TaskManagement.RepositoryEF.Repositories
 {
     public class TaskRepository
     {
+        Database db = new Database();
         public List<Task> GetAll()
         {
 
-            return new List<Task>();
+            return db.Tasks.ToList();
         }
 
         public Task GetById(int id)
