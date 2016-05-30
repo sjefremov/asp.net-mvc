@@ -1,4 +1,5 @@
 ﻿using CodeAcademy.TaskManagement.Domain.Entities;
+using CodeAcademy.TaskManagement.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,43 +8,43 @@ using System.Text;
 
 namespace CodeAcademy.TaskManagement.RepositoryEF.Repositories
 {
-    public class TaskRepository
+    public class TaskRepository : ITaskRepository
     {
         Database db = new Database();
+
+        public bool Create(Task task)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Task> GetAll()
         {
-
             return db.Tasks.ToList();
+        }
+
+        public string GetAsigneeName(int taskId)
+        {
+            throw new NotImplementedException();
         }
 
         public Task GetById(int id)
         {
-            return new Task();
+            throw new NotImplementedException();
         }
 
         public List<TaskComment> GetComments(int taskId)
         {
-            return new List<TaskComment>();
-        }
-
-        public string GetAssigneeName(int taskId)
-        {
-            return string.Empty;
-        }
-
-        public bool Create(Task task)
-        {
-            return false;
+            throw new NotImplementedException();
         }
 
         public bool Update(Task task)
         {
-            return false;
-        }
-
-        public bool Delete(Task task)
-        {
-            return false;
+            throw new NotImplementedException();
         }
     }
 }

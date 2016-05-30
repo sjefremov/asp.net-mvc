@@ -58,6 +58,10 @@
       <Project>{8df8f225-f0ef-4f9a-b3eb-90483bc2e7ac}</Project>
       <Name>CodeAcademy.TaskManagement.Domain.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CodeAcademy.TaskManagement.Domain.Interfaces\CodeAcademy.TaskManagement.Domain.Interfaces.csproj">
+      <Project>{41864e6b-3237-422d-ba8d-8b6a8a26cb58}</Project>
+      <Name>CodeAcademy.TaskManagement.Domain.Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace CodeAcademy.TaskManagement.Domain.Entities
 {
-    public class User
+    public class User : BaseEntity
     {
-
-        public int ID { get; set; }
 
         public string Email { get; set; }
 

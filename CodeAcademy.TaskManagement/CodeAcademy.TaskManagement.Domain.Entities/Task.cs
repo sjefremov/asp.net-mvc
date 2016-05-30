@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace CodeAcademy.TaskManagement.Domain.Entities
 {
-    public class Task
+    public class Task : BaseEntity
     {
-
-        public int ID { get; set; }
 
         public string Name { get; set; }
 

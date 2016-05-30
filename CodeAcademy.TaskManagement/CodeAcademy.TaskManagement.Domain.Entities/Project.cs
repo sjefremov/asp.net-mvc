@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace CodeAcademy.TaskManagement.Domain.Entities
 {
-    public class Project
+    public class Project : BaseEntity
     {
-        public int ID { get; set; }
 
         public string Name { get; set; }
 
