@@ -1,4 +1,5 @@
-﻿using CodeAcademy.TaskManagement.RepositoryEF.Repositories;
+﻿using CodeAcademy.TaskManagement.Domain.Interfaces;
+using CodeAcademy.TaskManagement.RepositoryEF.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace CodeAcademy.TaskManagement.WebApp.Controllers
 {
     public class TasksController : Controller
     {
-        public TaskRepository _taskRepository = new TaskRepository();
+        public ITaskRepository _taskRepository = new TaskRepository();
         // GET: Tasks
         public ActionResult Index()
         {

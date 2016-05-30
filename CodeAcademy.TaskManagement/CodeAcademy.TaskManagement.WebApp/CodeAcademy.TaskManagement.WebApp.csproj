@@ -120,6 +120,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CustomersController.cs" />
+    <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -133,6 +135,10 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Tasks\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Projects\Index.cshtml" />
+    <Content Include="Views\Customers\Index.cshtml" />
+    <Content Include="Views\Projects\Create.cshtml" />
+    <Content Include="Views\Customers\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -148,6 +154,10 @@
     <ProjectReference Include="..\CodeAcademy.TaskManagement.Domain.Entities\CodeAcademy.TaskManagement.Domain.Entities.csproj">
       <Project>{8df8f225-f0ef-4f9a-b3eb-90483bc2e7ac}</Project>
       <Name>CodeAcademy.TaskManagement.Domain.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeAcademy.TaskManagement.Domain.Interfaces\CodeAcademy.TaskManagement.Domain.Interfaces.csproj">
+      <Project>{41864e6b-3237-422d-ba8d-8b6a8a26cb58}</Project>
+      <Name>CodeAcademy.TaskManagement.Domain.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeAcademy.TaskManagement.RepositoryEF\CodeAcademy.TaskManagement.RepositoryEF.csproj">
       <Project>{1ff7b6af-8332-4f4c-ad29-2c36f671dad0}</Project>
