@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeAcademy.TaskManagement.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeAcademy.TaskManagement.Domain.Interfaces", "CodeAcademy.TaskManagement.Domain.Interfaces\CodeAcademy.TaskManagement.Domain.Interfaces.csproj", "{41864E6B-3237-422D-BA8D-8B6A8A26CB58}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TasksListAjaxJQuery", "TasksListAjaxJQuery\TasksListAjaxJQuery.csproj", "{3AB56FAF-7488-4335-9898-CBA894BB7E95}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{41864E6B-3237-422D-BA8D-8B6A8A26CB58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41864E6B-3237-422D-BA8D-8B6A8A26CB58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41864E6B-3237-422D-BA8D-8B6A8A26CB58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AB56FAF-7488-4335-9898-CBA894BB7E95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AB56FAF-7488-4335-9898-CBA894BB7E95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AB56FAF-7488-4335-9898-CBA894BB7E95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AB56FAF-7488-4335-9898-CBA894BB7E95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

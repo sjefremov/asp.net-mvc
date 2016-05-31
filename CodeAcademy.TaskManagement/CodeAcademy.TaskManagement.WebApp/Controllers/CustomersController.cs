@@ -38,5 +38,45 @@ namespace CodeAcademy.TaskManagement.WebApp.Controllers
 
             return View();
         }
+
+        public ActionResult Edit(int id)
+        {
+            var customer = _customerRepository.GetById(id);
+            return View(customer);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Customer customer)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_customerRepository.Update(customer))
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+
+            return View();
+        }
+
+        public ActionResult Delete(int id)
+        {
+            var customer = _customerRepository.GetById(id);
+            return View(customer);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(Customer customer)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_customerRepository.Delete(customer.ID))
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+
+            return View();
+        }
     }
 }

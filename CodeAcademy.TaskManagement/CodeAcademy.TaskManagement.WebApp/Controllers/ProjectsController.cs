@@ -12,6 +12,7 @@ namespace CodeAcademy.TaskManagement.WebApp.Controllers
     public class ProjectsController : Controller
     {
         IProjectRepository _projectRepository = new ProjectRepository();
+        ICustomerRepository _customerRepository = new CustomerRepository();
         // GET: Projects
         public ActionResult Index()
         {
@@ -22,6 +23,7 @@ namespace CodeAcademy.TaskManagement.WebApp.Controllers
 
         public ActionResult Create()
         {
+            ViewBag.Customers = _customerRepository.GetAll();
             return View();
         }
 

@@ -24,7 +24,16 @@ namespace CodeAcademy.TaskManagement.RepositoryEF.Repositories
 
         public bool Delete(int id)
         {
-            throw new NotImplementedException();
+            var dbCustomer = GetById(id);
+
+            if (dbCustomer != null)
+            {
+                dbCustomer.IsActive = false;
+
+                db.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
         public List<Customer> GetAll()
@@ -34,12 +43,23 @@ namespace CodeAcademy.TaskManagement.RepositoryEF.Repositories
 
         public Customer GetById(int id)
         {
-            throw new NotImplementedException();
+            return GetAll().FirstOrDefault(c => c.ID == id);
         }
 
         public bool Update(Customer customer)
         {
-            throw new NotImplementedException();
+            var dbCustomer = GetById(customer.ID);
+
+            if (dbCustomer != null)
+            {
+                dbCustomer.Name = customer.Name;
+                dbCustomer.Company = customer.Company;
+                dbCustomer.Email = customer.Email;
+
+                db.SaveChanges();
+                return true;
+            }
+            return false;
         }
     }
 }
