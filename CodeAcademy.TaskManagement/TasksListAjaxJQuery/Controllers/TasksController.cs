@@ -22,9 +22,21 @@ namespace TasksListAjaxJQuery.Controllers
 
         public JsonResult Add(Task task)
         {
-            Thread.Sleep(5000);
+            //Thread.Sleep(5000);
 
             db.Tasks.Add(task);
+            db.SaveChanges();
+
+            return Json(task.ID, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Delete(int id)
+        {
+            Thread.Sleep(5000);
+
+            var task = db.Tasks.Find(id);
+
+            task = db.Tasks.Remove(task);
             db.SaveChanges();
 
             return Json(task.ID, JsonRequestBehavior.AllowGet);

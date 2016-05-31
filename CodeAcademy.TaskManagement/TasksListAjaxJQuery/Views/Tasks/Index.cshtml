@@ -51,7 +51,7 @@
                 </td>
                 <td>
 
-                    <a href="~/tasks/delete/@item.ID">Delete</a>
+                    <a href="~/tasks/delete/@item.ID" class="delete">Delete</a>
                 </td>
             </tr>
         }
@@ -74,12 +74,38 @@
                 $.get(getUri, function (response) {
 
                     if (response > 0) {
-                        var newTr = '<tr><td>' + name + '</td><td>' + description + '</td><td><a href="~/tasks/delete/' + response +'">Delete</a></td></tr>';
+                        var newTr = '<tr><td>' + name + '</td><td>' + description + '</td><td><a class="delete" href="/tasks/delete/' + response + '">Delete</a></td></tr>';
                         $("#tbodyTasks").append(newTr);
                     }
                     console.log(response);
                     $("#loadingDiv").hide();
                 });
+            });
+        });
+
+        $(function myfunction() {
+            $("tbody").on('click', 'a.delete', function myfunction(event) {
+                
+                event.preventDefault();
+
+                if (window.confirm("Delete this task?")) {
+                    $("#loadingDiv").show();
+                    var $tr = $(this).closest('tr');
+                    var getUri = $(this).attr("href");
+
+                    $.get(getUri, function (response) {
+
+                        if (response > 0) {
+                            
+                            $tr.remove();
+                        }
+                        console.log(response);
+                        $("#loadingDiv").hide();
+                    });
+
+                }
+
+                
             });
         });
     </script>
