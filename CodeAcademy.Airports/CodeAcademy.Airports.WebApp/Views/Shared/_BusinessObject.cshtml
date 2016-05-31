@@ -1,0 +1,58 @@
+﻿@model CodeAcademy.Airports.Domain.Entities.BusinessObject
+
+<div class="article">
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OpeningTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OpeningTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ClosingTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ClosingTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Airport)
+        </dt>
+
+        <dd>
+            @Model.Airport.City (@Model.Airport.Code)
+        </dd>
+
+    </dl>
+
+    <p>
+        @if (Model.Responsibles.Select(r => r.Email).Contains(User.Identity.Name))
+        {
+            @Html.ActionLink("Edit object", "Edit", "BusinessObjects", new { id = Model.ID }, null) @:|
+            @Html.ActionLink("Add offer", "Create", "Offer", new { businessObjectId = Model.ID }, null) @:|
+        }
+        @Html.ActionLink("View offers (" + Model.Offers.Count + ")", "Details", "BusinessObjects", new { id = Model.ID }, null)
+    </p>
+
+</div>
+
+

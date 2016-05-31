@@ -1,0 +1,13 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+    <li>
+        <span style="color:#999;">@User.Identity.Name</span> 
+        <a style="display: inline-block;" href="~/Employee/Logout">Log Out</a>
+    </li>
+}
+else
+{
+    <li>
+        <a style="display: inline-block;" href="~/Employee/Login">Log In</a>
+    </li>
+}

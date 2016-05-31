@@ -1,0 +1,50 @@
+﻿@model CodeAcademy.Airports.Domain.Entities.Offer
+
+<div class="article">
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DiscountPercentages)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiscountPercentages)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AvailableQuantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AvailableQuantity)
+        </dd>
+
+    </dl>
+
+    <p>
+        @if (Model.BusinessObject.Responsibles.Select(r => r.Email).Contains(User.Identity.Name))
+        {
+            @Html.ActionLink("Edit", "Edit", "Offer", new { id = Model.ID }, null)
+            @:| @Html.ActionLink("Delete", "Delete", "Offer", new { id = Model.ID }, null)
+        }
+    </p>
+
+</div>
+
+
+

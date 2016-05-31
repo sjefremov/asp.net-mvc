@@ -1,0 +1,19 @@
+﻿@model CodeAcademy.Airports.Domain.Entities.BusinessObject
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+@Html.Partial("_BusinessObject", Model)
+
+<h3 class="afterArticles">Offers</h3>
+
+@foreach (var offer in Model.Offers.OrderByDescending(o => o.DiscountPercentages))
+{
+    @Html.Partial("_Offer", offer)
+}
+<div class="afterArticles">
+        @Html.ActionLink("Back", "Details", "Airports", new { id = Model.AirportID }, null)
+</div>

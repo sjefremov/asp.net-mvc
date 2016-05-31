@@ -1,0 +1,22 @@
+﻿@model CodeAcademy.Airports.Domain.Entities.Airport
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details for airport</h2>
+
+@Html.Partial("_Airport", Model)
+
+<hr class="afterArticles" />
+<h4>BusinessObjects</h4>
+<hr />
+
+@foreach (var businessObject in Model.BusinessObjects)
+{
+    @Html.Partial("_BusinessObject", businessObject);
+}
+
+<p class="afterArticles">
+    @Html.ActionLink("Back to List", "Index")
+</p>

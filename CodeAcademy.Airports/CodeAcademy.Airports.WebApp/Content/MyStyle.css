@@ -1,0 +1,11 @@
+﻿.article {
+    float: left;
+    border: 1px blue solid;
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.afterArticles {
+    clear: left;
+}
