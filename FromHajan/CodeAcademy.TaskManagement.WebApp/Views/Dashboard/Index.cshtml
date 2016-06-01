@@ -1,0 +1,65 @@
+﻿@model IQueryable<CodeAcademy.TaskManagement.Domain.Entities.DashboardWidget>
+
+
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+@section styles {
+    <style>
+        .widget-small {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            border: 1px solid black;
+        }
+
+        .widget-medium {
+            width: 400px;
+            height: 200px;
+            background-color: yellow;
+            border: 1px solid black;
+        }
+
+        .widget-big {
+            width: 800px;
+            height: 200px;
+            background-color: darkcyan;
+            border: 1px solid black;
+        }
+    </style>    
+}
+
+<h2>Dashboard</h2>
+
+
+@foreach (var item in Model)
+{
+    <div class="@GetWidgetSize(item.Size)">
+        <h2>@item.DisplayName</h2>
+        <content>
+
+
+        </content>
+    </div>
+}
+
+@functions {
+    public string GetWidgetSize(CodeAcademy.TaskManagement.Domain.Entities.WidgetSize widgetSize)
+    {
+        switch (widgetSize)
+        {
+            case CodeAcademy.TaskManagement.Domain.Entities.WidgetSize.Small:
+                return "widget-small";
+
+            case CodeAcademy.TaskManagement.Domain.Entities.WidgetSize.Medium:
+                return "widget-medium";
+
+            case CodeAcademy.TaskManagement.Domain.Entities.WidgetSize.Big:
+                return "widget-big";
+
+            default:
+                return "";
+        }
+    }
+}

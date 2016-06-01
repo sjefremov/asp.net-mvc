@@ -1,0 +1,105 @@
+﻿@model IEnumerable<TasksListAjaxjQueryApp.Models.Task>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Tasks</h2>
+
+<div class="form-group">
+    <fieldset>
+        <legend>Add task</legend>
+        <div class="col-md-10">
+            <input id="name" type="text" name="name" placeholder="Task name?" class="form-control" />
+        </div>
+        <div class="col-md-10">
+            <textarea id="description" name="description" placeholder="Provide task description..." class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input id="btnAdd" type="button" value="Add New" class="btn btn-default" />
+            </div>
+        </div>
+        <div id="loadingDiv" class="form-group" style="display:none;">
+            <div class="col-md-offset-2 col-md-10">
+                <img src="~/Content/ajax-loader.gif" />
+            </div>
+        </div>
+    </fieldset>
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th></th>
+    </tr>
+    <tbody id="tbodyTasks">
+        @foreach (var item in Model)
+        {
+            <tr id="tr_@item.ID">
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Description
+                </td>
+                <td>
+                    <a class="btnDelete" id="@item.ID" href="#">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+@section scripts {
+    <script>
+        $(function () {
+            $("#btnAdd").on("click", function (event) {
+                event.preventDefault();
+                $("#loadingDiv").show();
+
+                var name = $("#name").val();
+                var description = $("#description").val();
+
+                var getUri = "/tasks/add?name=" + name + "&description=" + description;
+
+                $.get(getUri, function (response)
+                {
+                    console.log(response);
+                    if (response > 0)
+                    {
+                        var newTr = "<tr id='tr_" + response + "'><td>" + name + "</td><td>" + description + "</td>"
+                            + "<td><a class='btnDelete' id='"+response+"' href='#'>Delete</a></td></tr>";
+
+                        $("#tbodyTasks").append(newTr);
+                        $("#loadingDiv").hide();
+                    }
+                });
+
+            });
+
+            $(".btnDelete").on("click", function (event) {
+                event.preventDefault();
+
+                if (confirm("Are you sure?"))
+                {
+                    var currentId = $(this).attr("id");
+
+                    $.get("/Tasks/Delete/" + currentId, function (response) {
+                        if (response == true)
+                        {
+                            $("#tr_" + currentId).slideUp(1000);
+                        }
+                    });
+                }
+
+            })
+        })
+    </script>
+}
