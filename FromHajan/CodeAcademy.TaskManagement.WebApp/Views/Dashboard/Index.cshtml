@@ -8,10 +8,11 @@
 @section styles {
     <style>
         .widget-small {
-            width: 200px;
+            width: 280px;
             height: 200px;
-            background-color: red;
+            background-color: darkred;
             border: 1px solid black;
+            color: white;
         }
 
         .widget-medium {
@@ -19,6 +20,7 @@
             height: 200px;
             background-color: yellow;
             border: 1px solid black;
+            color: white;
         }
 
         .widget-big {
@@ -26,6 +28,7 @@
             height: 200px;
             background-color: darkcyan;
             border: 1px solid black;
+            color: white;
         }
     </style>    
 }
@@ -37,9 +40,22 @@
 {
     <div class="@GetWidgetSize(item.Size)">
         <h2>@item.DisplayName</h2>
-        <content>
-
-
+        <content id="dashboardWidgets">
+            @if (item.Size == CodeAcademy.TaskManagement.Domain.Entities.WidgetSize.Small)
+            {
+                <a href="#" itemid="@item.ID" userid="@item.UserId" size="2" class="btnBig btn btn-default">BIG</a>
+                <a href="#" itemid="@item.ID" userid="@item.UserId" size="1" class="btnMedium btn btn-default">MEDIUM</a>
+            }
+            else if (item.Size == CodeAcademy.TaskManagement.Domain.Entities.WidgetSize.Medium)
+            {
+                <a href="#" itemid="@item.ID" userid="@item.UserId" size="0" class="btn btn-default">SMALL</a>
+                <a href="#" itemid="@item.ID" userid="@item.UserId" size="2" class="btnBig btnMedium btn btn-default">BIG</a>
+            }
+            else if (item.Size == CodeAcademy.TaskManagement.Domain.Entities.WidgetSize.Big)
+            {
+                <a href="#" itemid="@item.ID" userid="@item.UserId" size="0" class="btn btn-default">SMALL</a>
+                <a href="#" itemid="@item.ID" userid="@item.UserId" size="1" class="btnMedium btn btn-default">MEDIUM</a>
+            }
         </content>
     </div>
 }
@@ -62,4 +78,45 @@
                 return "";
         }
     }
+}
+
+@section scripts{
+        <script>
+            $(function myfunction() {
+                $("#dashboardWidgets a").on("click", function (event) {
+                    event.preventDefault();
+                    var itemId = $(this).attr("itemid");
+                    var userId = $(this).attr("userid");
+                    var size = $(this).attr("size");
+
+                    var $currentObject = $(this);
+
+                    $.get("/dashboard/setSize?userID=" + userId + "&itemid=" + itemId + "&size=" + size, function (response) {
+                        
+                        if (response) {
+                            $currentObject.closest('div')
+                                            .removeClass()
+                                            .addClass(getWidgetSize(response.Size));
+                        }
+                    });
+
+                });
+                function getWidgetSize(widgetSize) {
+                    switch (widgetSize)
+                    {
+                        case 0:
+                            return "widget-small";
+
+                        case 1:
+                            return "widget-medium";
+
+                        case 2:
+                            return "widget-big";
+
+                        default:
+                            return "";
+                    }
+                }
+            });
+        </script>
 }

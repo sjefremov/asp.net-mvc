@@ -18,5 +18,20 @@ namespace CodeAcademy.TaskManagement.WebApp.Controllers
 
             return View(widgets);
         }
+
+        public JsonResult SetSize(int userId, int itemId, int size)//id = userID
+        {
+            var dbWidget = _dashboardWidgetRepository.GetById(userId, itemId);
+
+            if (dbWidget != null)
+            {
+                dbWidget.Size = (Domain.Entities.WidgetSize)size;
+                _dashboardWidgetRepository.Update(userId, dbWidget);
+
+                return Json(dbWidget, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
     }
 }
