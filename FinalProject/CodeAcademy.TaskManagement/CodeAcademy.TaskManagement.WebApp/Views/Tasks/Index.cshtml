@@ -1,0 +1,216 @@
+﻿@model IEnumerable<CodeAcademy.TaskManagement.Domain.Entities.Task>
+@using CodeAcademy.TaskManagement.Domain.Entities
+
+@{
+    ViewBag.Title = "Tasks";
+}
+
+<h2>Tasks for Project: @ViewBag.Project.Name</h2>
+
+<p>
+    @*@Html.ActionLink("New Task", "Create", new { projectId = ViewBag.Project.ID }) |*@
+    <a href="#" data-toggle="modal" data-action="create" data-target="#taskModal">New Task</a> |
+    @Html.ActionLink("Back to projects", "Index", "Projects", null, null)
+</p>
+<div id="allTasks">
+    <div id="@TaskStatus.ToDo" class="col-md-6 col-lg-3">
+        <h4>To Do</h4>
+        @foreach (var task in Model.Where(t => t.Status == TaskStatus.ToDo))
+        {
+            @Html.Partial("_Details", task)
+        }
+    </div>
+    <div id="@TaskStatus.InProgress" class="col-md-6 col-lg-3">
+        <h4>In Progress</h4>
+        @foreach (var task in Model.Where(t => t.Status == TaskStatus.InProgress))
+        {
+            @Html.Partial("_Details", task)
+        }
+    </div>
+    <div id="@TaskStatus.InTesting" class="col-md-6 col-lg-3">
+        <h4>In Testing</h4>
+        @foreach (var task in Model.Where(t => t.Status == TaskStatus.InTesting))
+        {
+            @Html.Partial("_Details", task)
+        }
+    </div>
+    <div id="@TaskStatus.Done" class="col-md-6 col-lg-3">
+        <h4>Done</h4>
+        @foreach (var task in Model.Where(t => t.Status == TaskStatus.Done))
+        {
+            @Html.Partial("_Details", task)
+        }
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <span id="errorOnSubmitModal" style="color:red"></span>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button id="submitModal" type="button" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+ @section scripts{
+@*@Scripts.Render("~/bundles/jqueryval")*@
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script>
+        $(function () {
+            $('#taskModal').on('shown.bs.modal', function (event) {
+
+                var $triggerControl = $(event.relatedTarget);
+                var action = $triggerControl.data("action");
+
+                $('#myModalLabel').text(action + ' task');
+
+                $('#submitModal').data('action', action);
+
+                if (action === 'create') {
+                    var data = { projectId: @ViewBag.Project.ID /* add other additional parameters */ };
+                }
+                else {
+                    var data =  { id: $triggerControl.data('task_id') /* add other additional parameters */ };
+                    $('#submitModal').data('task_id', $triggerControl.data('task_id'));
+                }
+
+                $.ajax({
+                    url: '/Tasks/' + action,
+                    data: data,
+                    cache: false,
+                    type: "GET",
+                    dataType: "html",
+                    success: function (data) {
+                        $('#taskModal .modal-body').empty().append(data);
+                    }
+                });
+            });
+
+            $('#submitModal').on('click', function () {
+                if ($(this).data('action') === 'delete') {
+
+                    $.ajax({
+                        url: '/Tasks/Delete',
+                        data:  { id: $(this).data('task_id') },
+                        cache: false,
+                        type: "POST",
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.Success) {
+                                $('#errorOnSubmitModal').text('');
+                                $('#taskModal').modal('hide');
+
+                                $('div.task-article[data-task_id="' + data.TaskId +'"]').remove();
+                            }
+                            else {
+                                $('#errorOnSubmitModal').text('Deleting task was unsuccessful!');
+                            }
+                        },
+                        failure: function (data) {
+                            onSubmitTaskFailure(data);
+                        }
+                    });
+                    
+                    return;
+                }
+
+                $('#taskModal .modal-body form').submit();
+            });
+
+
+        });
+
+        function onCreateTaskSuccess(data) {
+            if (data.Success) {
+                $('#errorOnSubmitModal').text('');
+                $('#taskModal').modal('hide');
+
+                //var task = JSON.parse(data.Task);
+                var task = data.Task;
+
+                var $taskDiv = $('<div>').addClass('task-article');
+                $taskDiv.append('<h4 data-content="name">Task: ' + task.Name + '</h4>');
+                $taskDiv.append('<hr />');
+                var $dl = $('<dl>');
+                $dl.append('<dt>Project</dt>');
+                $dl.append("<dd data-content='project'>@ViewBag.Project.Name</dd>");
+                $dl.append('<dt>User</dt>');
+                $dl.append('<dd data-content="user">' + task.User + '</dd>');
+                $dl.append('<dt>Description</dt>');
+                $dl.append('<dd data-content="description">' + task.Description + '</dd>');
+                $dl.append('<dt>Estimated hours</dt>');
+                $dl.append('<dd data-content="estimatedHours">' + task.EstimatedHours + '</dd>');
+                $dl.append('<dt>Start date</dt>');
+                $dl.append('<dd data-content="startDate">' + task.StartDate + '</dd>');
+                $dl.append('<dt>End date</dt>');
+                $dl.append('<dd data-content="endDate">' + task.EndDate + '</dd>');
+                $dl.append('<dt>Type</dt>');
+                $dl.append('<dd data-content="type">' + task.Type + '</dd>');
+
+                $dl.appendTo($taskDiv);
+
+                var $p = $('<p>');
+                $('<a href="#" data-toggle="modal" data-task_id="' + task.ID + '" data-action="edit" data-target="#taskModal">Edit</a>')
+                    .appendTo($p);
+                $p.append(' | ');
+                $('<a href="#" data-toggle="modal" data-task_id="' + task.ID + '" data-action="delete" data-target="#taskModal">Delete</a>')
+                    .appendTo($p);
+                $p.appendTo($taskDiv);
+
+                $taskDiv.insertAfter($('div#' + task.Status + ' h4').first()).fadeIn(1000);
+            }
+            else {
+                $('#errorOnSubmitModal').text('Saving task was unsuccessful!');
+            }
+
+            console.log(data);
+        }
+
+        function onSubmitTaskFailure(data) {
+            console.log(data);
+            $('#errorOnSubmitModal').text('Requisted action was not completed!');
+        }
+
+
+        function onEditTaskSuccess(data) {
+            if (data.Success) {
+                $('#errorOnSubmitModal').text('');
+                $('#taskModal').modal('hide');
+
+                //var task = JSON.parse(data.Task);
+                var task = data.Task;
+
+                var $oldTaskDiv = $('div.task-article[data-task_id="' + task.ID +'"]');
+
+                $oldTaskDiv.find('[data-content="name"]').text(task.Name);
+                $oldTaskDiv.find('[data-content="description"]').text(task.Description);
+                $oldTaskDiv.find('[data-content="startDate"]').text(task.StartDate);
+                $oldTaskDiv.find('[data-content="endDate"]').text(task.EndDate);
+                $oldTaskDiv.find('[data-content="type"]').text(task.Type);
+                $oldTaskDiv.find('[data-content="status"]').text(task.Status);
+
+                if ($oldTaskDiv.parents('div#' + task.Status).length === 0) {//there is no parent with id = task.Status so the taskDiv should be moved to new group
+                    $oldTaskDiv.detach().insertAfter($('div#' + task.Status + ' h4').first());
+                    //$('div#' + task.Status + ' h4').first().after($oldTaskDiv);
+                }
+
+            }
+            else {
+                $('#errorOnSubmitModal').text('Saving task was unsuccessful!');
+            }
+
+            console.log(data);
+        }
+     </script>     
+}

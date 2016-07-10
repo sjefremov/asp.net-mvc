@@ -1,0 +1,211 @@
+﻿@model PagedList.IPagedList<CodeAcademy.TaskManagement.Domain.Entities.Project>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Projects";
+}
+
+<h2>Projects</h2>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        @*@Html.ActionLink("Create New", "Create")*@
+        <a href="#" data-toggle="modal" data-action="create" data-target="#projectModal">New Project</a>
+    </p>
+}
+
+<table id="projects" class="table">
+    <tr>
+        <th>
+            Customer Name
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            DateCreated
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr data-project_id="@item.ID">
+        <td data-content="customer">
+            @Html.DisplayFor(modelItem => item.Customer.Name)
+        </td>
+        <td data-content="name">
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td data-content="dateCreated">
+            @Html.DisplayFor(modelItem => item.DateCreated)
+        </td>
+        <td data-content="options">
+            @if (User.IsInRole("Admin"))
+            {
+                @:<a href="#" data-toggle="modal" data-project_id="@item.ID" data-action="edit" data-target="#projectModal">Edit</a> |
+                @:<a href="#" data-toggle="modal" data-project_id="@item.ID" data-action="delete" data-target="#projectModal">Delete</a> |
+            }
+            @Html.ActionLink("Tasks", "Index", "Tasks" , new { projectId = item.ID }, null)
+            
+            
+        </td>
+    </tr>
+}
+
+</table>
+<br />
+@if (Model.PageCount > 1)
+{
+    @:Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+}
+
+<!-- Modal -->
+<div class="modal fade" id="projectModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <span id="errorOnSubmitModal" style="color:red"></span>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button id="submitModal" type="button" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    @*@Scripts.Render("~/bundles/jqueryval")*@
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script>
+        $(function () {
+            $('#projectModal').on('shown.bs.modal', function (event) {
+
+                var $triggerControl = $(event.relatedTarget);
+                var action = $triggerControl.data("action");
+
+                $('#myModalLabel').text(action + ' task');
+
+                $('#submitModal').data('action', action);
+
+                if (action === 'create') {
+                    var data = {};
+                }
+                else {
+                    var data =  { id: $triggerControl.data('project_id') /* add other additional parameters */ };
+                    $('#submitModal').data('project_id', $triggerControl.data('project_id'));
+                }
+
+                $.ajax({
+                    url: '/Projects/' + action,
+                    data: data,
+                    cache: false,
+                    type: "GET",
+                    dataType: "html",
+                    success: function (data) {
+                        $('#projectModal .modal-body').empty().append(data);
+                    }
+                });
+            });
+
+            $('#submitModal').on('click', function () {
+                if ($(this).data('action') === 'delete') {
+
+                    $.ajax({
+                        url: '/Projects/Delete',
+                        data:  { id: $(this).data('project_id') },
+                        cache: false,
+                        type: "POST",
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.Success) {
+                                $('#errorOnSubmitModal').text('');
+                                $('#projectModal').modal('hide');
+
+                                $('table#projects tr[data-project_id="' + data.ProjectId +'"]').remove();
+                            }
+                            else {
+                                $('#errorOnSubmitModal').text('Deleting project was unsuccessful!');
+                            }
+                        },
+                        failure: function (data) {
+                            onSubmitProjectFailure(data);
+                        }
+                    });
+
+                    return;
+                }
+
+                $('#projectModal .modal-body form').submit();
+            });
+
+
+        });
+
+        function onCreateProjectSuccess(data) {
+            if (data.Success) {
+                $('#errorOnSubmitModal').text('');
+                $('#projectModal').modal('hide');
+
+                var project = data.Project;
+
+                var $projectTr = $('<tr data-project_id="' + project.ID + '"></tr>');
+                $projectTr.append('<td data-content="customer">' + project.Customer + '</td>');
+                $projectTr.append('<td data-content="name">' + project.Name + '</td>');
+                $projectTr.append('<td data-content="dateCreated">' + project.DateCreated + '</td>');
+
+                var $tdOptions = $('<td>').appendTo($projectTr);
+                @if (User.IsInRole("Admin"))
+                {
+                    @: $tdOptions.append('<a href="#" data-toggle="modal" data-project_id="' + project.ID + '" data-action="edit" data-target="#projectModal">Edit</a> | ')
+                        @:.append('<a href="#" data-toggle="modal" data-project_id="' + project.ID + '" data-action="delete" data-target="#projectModal">Delete</a> | ');
+                }
+
+                $tdOptions.append('<a href="/Tasks?projectId=' + project.ID + '">Tasks</a>');
+
+                $projectTr.insertAfter($('table#projects tbody tr').first()).fadeIn(1000);
+
+            }
+            else {
+                $('#errorOnSubmitModal').text('Saving task was unsuccessful!');
+            }
+
+            console.log(data);
+        }
+
+        function onSubmitProjectFailure(data) {
+            console.log(data);
+            $('#errorOnSubmitModal').text('Requisted action was not completed!');
+        }
+
+
+        function onEditProjectSuccess(data) {
+            if (data.Success) {
+                $('#errorOnSubmitModal').text('');
+                $('#projectModal').modal('hide');
+
+                var project = data.Project;
+
+                var $oldProjectTr = $('table#projects tr[data-project_id="' + project.ID +'"]');
+
+                $oldProjectTr.find('[data-content="customer"]').text(project.Customer);
+                $oldProjectTr.find('[data-content="name"]').text(project.Name);
+                $oldProjectTr.find('[data-content="dateCreated"]').text(project.DateCreated);
+
+            }
+            else {
+                $('#errorOnSubmitModal').text('Saving project was unsuccessful!');
+            }
+
+            console.log(data);
+        }
+    </script>
+}

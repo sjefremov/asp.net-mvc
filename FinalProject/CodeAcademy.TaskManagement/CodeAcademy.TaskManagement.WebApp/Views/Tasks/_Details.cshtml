@@ -1,0 +1,71 @@
+﻿@model CodeAcademy.TaskManagement.Domain.Entities.Task
+
+<div class="task-article" data-task_id="@Model.ID">
+    <h4 data-content="name">Task: @Model.Name</h4>
+    <hr />
+    <dl>
+        <dt>
+            Project
+        </dt>
+
+        <dd data-content="project">
+            @Html.DisplayFor(model => model.Project.Name)
+        </dd>
+
+        <dt>
+            User
+        </dt>
+
+        <dd data-content="user">
+            @Html.DisplayFor(model => model.User.DisplayName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd data-content="description">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EstimatedHours)
+        </dt>
+
+        <dd data-content="estimatedHours">
+            @Html.DisplayFor(model => model.EstimatedHours)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+
+        <dd data-content="startDate">
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+
+        <dd data-content="endDate">
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd data-content="type">
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+    </dl>
+    <p>
+        <a href="#" data-toggle="modal" data-task_id="@Model.ID" data-action="edit" data-target="#taskModal">Edit</a> |
+        <a href="#" data-toggle="modal" data-task_id="@Model.ID" data-action="delete" data-target="#taskModal">Delete</a>
+        @*@Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |*@
+        @*@Html.ActionLink("Delete", "Delete", new { id = Model.ID })*@
+    </p>
+</div>
+
